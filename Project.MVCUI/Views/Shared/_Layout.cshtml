@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="~/OuterTools/img/favicon.png">
+
+    <title>Tekno Center</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/OuterTools/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/OuterTools/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/OuterTools/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+
+
+    <link href="~/OuterTools/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/OuterTools/css/owl.carousel.css" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="~/OuterTools/css/style.css" rel="stylesheet">
+    <link href="~/OuterTools/css/style-responsive.css" rel="stylesheet" />
+
+    <script src="~/OuterTools/js/jquery.js"></script>
+    <script src="~/OuterTools/js/jquery-1.8.3.min.js"></script>
+    <script src="~/OuterTools/js/jquery.stepy.js"></script>
+    <script src="~/OuterTools/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/OuterTools/assets/jquery-knob/js/jquery.knob.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <section id="container">
+        <!--header start-->
+        <header class="header white-bg">
+            <div class="sidebar-toggle-box">
+                <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
+            </div>
+            <!--logo start-->
+            <a href="@Url.Action("ShoppingList", new { @controller="Shopping", area=""})" class="logo">Tekno<span>Center</span></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <!--  notification end -->
+            </div>
+            <div class="top-nav ">
+                @if (Session["member"] != null)
+                {
+                    <!--search & user info start-->
+                    <ul class="nav pull-right top-menu">
+                        <!-- user login dropdown start-->
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <img src="@((Session["member"] as AppUser).Profile.ImagePath)" style="width:29px; height:29px;">
+                                <span class="username">@((Session["member"]as AppUser).Profile.FullName)</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu extended logout">
+                                <div class="log-arrow-up"></div>
+                                <li><a href="@Url.Action("CardPage", new { @controller="Shopping", area=""})"><i class=" icon-shopping-cart"></i>Sepet</a></li>
+                                <li><a href="@Url.Action("ProfileDetail", new { @controller="Profile", area=""})"><i class="icon-cog"></i> Profil</a></li>
+                                <li><a href="@Url.Action("Addresses", new { @controller="Address", area=""})"><i class="icon-road"></i> Adreslerim</a></li>
+                                <li><a href="@Url.Action("LogOut", new { @controller="Home", area=""})"><i class="icon-signout"></i> Çıkış Yap</a></li>
+                            </ul>
+                        </li>
+                        <!-- user login dropdown end -->
+                    </ul>
+                    <!--search & user info end-->
+                }
+                else if (Session["admin"] != null)
+                {
+                    <div class="nav pull-right top-menu">
+                        @Html.ActionLink("Çıkış Yap", "LogOut", new { @controller="Home", area=""}, new { @class="btn btn-round btn-primary"})
+                    </div>
+                }
+                else
+                {
+                    <div class="nav pull-right top-menu">
+                        @Html.ActionLink("Giriş Yap", "Login", "Home", new { area = "" }, new { @class = "btn btn-round btn-info" })
+                        @Html.ActionLink("Üye Ol", "RegisterNow", "Register", new { area = "" }, new { @class = "btn btn-round btn-info" })
+                    </div>
+                }
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    @if (Session["admin"] != null)
+                    {
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="icon-cogs"></i>
+                                <span>Admin Paneli</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="@Url.Action("CategoryList", new { @controller="Category", area="Admin"})">Kategori İşlemleri</a></li>
+                                <li><a href="@Url.Action("ProductList", new { @controller="Product", area="Admin"})">Ürün İşlemleri</a></li>
+                                <li><a href="@Url.Action("UserList", new { @controller="Authority", area="Admin"})">Yetki İşlemleri</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li>
+                        <a href="@Url.Action("ShoppingList", new { @controller="Shopping", area=""})">
+                            <i class="icon-th-list"></i>
+                            <span>Ürünler</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("CardPage", new { @controller="Shopping", area=""})">
+                            <i class="icon-shopping-cart"></i>
+                            <span>Sepet</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("CargoTracking", new { @controller="Home", area=""})">
+                            <i class="icon-dropbox"></i>
+                            <span>Kargo Takip</span>
+                        </a>
+                    </li>
+
+                    @if (Session["member"] != null || Session["admin"] != null)
+                    {
+                        <li>
+                            <a href="@Url.Action("Addresses", new { @controller="Address", area=""})">
+                                <i class="icon-road"></i>
+                                <span>Adres</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="@Url.Action("ProfileDetail", new { @controller="Profile", area=""})">
+                                <i class="icon-cog"></i>
+                                <span>Profil</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="@Url.Action("LogOut", new { @controller="Home", area=""})">
+                                <i class="icon-signout"></i>
+                                <span>Çıkış Yap</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="icon-signin"></i>
+                                <span>Giriş Yap</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="@Url.Action("Login", new { @controller="Home", area=""})">Giriş Yap</a></li>
+                                <li><a href="@Url.Action("RegisterNow", new { @controller="Register", area=""})">Üye Ol</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li>
+                        <a href="@Url.Action("ContactUs", new { @controller="Home", area=""})">
+                            <i class="icon-comments"></i>
+                            <span>Bize Ulaşın</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                @RenderBody()
+            </section>
+        </section>
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <div class="text-center">
+                2021 &copy; Tekno Center
+                <a href="#" class="go-top">
+                    <i class="icon-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+        <!--footer end-->
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script class="include" type="text/javascript" src="~/OuterTools/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/OuterTools/js/jquery.scrollTo.min.js"></script>
+    <script src="~/OuterTools/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="~/OuterTools/js/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="~/OuterTools/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="~/OuterTools/js/owl.carousel.js"></script>
+    <script src="~/OuterTools/js/jquery.customSelect.min.js"></script>
+    <script src="~/OuterTools/js/respond.min.js"></script>
+
+    <!--common script for all pages-->
+    <script src="~/OuterTools/js/common-scripts.js"></script>
+
+    <!--script for this page-->
+    <script src="~/OuterTools/js/sparkline-chart.js"></script>
+    <script src="~/OuterTools/js/easy-pie-chart.js"></script>
+    <script src="~/OuterTools/js/count.js"></script>
+
+
+
+    <script>
+
+        //owl carousel
+
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+                autoPlay: true
+
+            });
+        });
+
+        //custom select box
+
+        $(function () {
+            $('select.styled').customSelect();
+        });
+
+    </script>
+
+</body>
+</html>

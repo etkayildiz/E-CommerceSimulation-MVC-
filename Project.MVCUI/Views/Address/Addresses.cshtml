@@ -1,0 +1,71 @@
+﻿@model ProfileVM
+@{
+    ViewBag.Title = "Addresses";
+}
+
+<section id="container" class="">
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img src="@Model.Profile.ImagePath" alt="Resim Yok">
+                    </a>
+                    <h1>@Model.Profile.FullName</h1>
+                    <p>@Model.User.Email</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="@Url.Action("ProfileDetail", "Profile", new { area=""})"> <i class="icon-user"></i> Profil</a></li>
+                    <li><a href="@Url.Action("EditProfile", "Profile", new { id=Model.User.ID, area=""})"> <i class="icon-edit"></i> Profili düzenle</a></li>
+                    <li class="active"><a href="@Url.Action("Addresses", new { area=""})"> <i class="icon-road"></i> Adresler</a></li>
+                </ul>
+
+            </section>
+            <div style="font-size:medium">
+                <b>Yeni bir adres eklemek için lütfen @Html.ActionLink("tıklayınız", "AddAddress", new { @controller= "Address", area="" })</b>
+            </div>
+        </aside>
+
+
+
+        <aside class="profile-info col-lg-9">
+            <section class="panel">
+                <div class="bio-graph-heading">
+                    ADRESLERİ DÜZENLE
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        @foreach (Address item in Model.Profile.Addresses)
+                        {
+                            <div class="form-group">
+                                <div><label class="control-label col-lg-2" style="font-size:medium;width:auto;">@item.Name: </label></div>
+                                
+                                <div class="col-lg-10" style="font-size:small;width:auto;">
+                                    @item.FullAddress
+                                </div>
+                                <div>
+                                    @Html.ActionLink("Sil", "DeleteAddress", new { id = item.ID, area = "" }, new { @class = "btn btn-round btn-danger pull-right" })
+
+                                </div>
+                                <div style="margin-right:50px">
+                                    @Html.ActionLink("Güncelle", "UpdateAddress", new { id = item.ID, area = "" }, new { @class = "btn btn-round btn-warning pull-right" })
+                                </div>
+                                    &nbsp;
+                                
+                            </div>
+
+                            <br /><br /><br /><br />
+                        }
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</section>
+
+<script>
+
+    $(".knob").knob();
+
+</script>

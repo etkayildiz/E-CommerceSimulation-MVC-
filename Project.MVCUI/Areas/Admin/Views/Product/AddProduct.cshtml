@@ -1,0 +1,149 @@
+﻿@model ProductVM
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .genislik {
+        width: 300px;
+    }
+
+    .field-validation-error {
+        color: red;
+        font-weight: bolder;
+    }
+</style>
+
+<div class="text-center" style="font-family:'Times New Roman', Times, serif; font-weight:bold; color:green; font-size:large">
+    <p>Birim fiyatı kısmında '.' (nokta) ile fiyat girişi kabul edilmediğinden ürünün fiyatı 1TL olarak gözükecektir!</p>
+</div>
+
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Ürün Ekleme Sayfası
+                </header>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">İsim</label>
+                        <div class="col-sm-10">
+                            @Html.ValidationMessageFor(x => x.Product.Name)
+                            @Html.TextBoxFor(x => x.Product.Name, new { @class = "form-control genislik" })
+                        </div>
+                    </div>
+
+                    <br /><br />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Fiyat</label>
+                        <div class="col-sm-10">
+                            @Html.ValidationMessageFor(x => x.Product.UnitPrice)
+                            @Html.TextBoxFor(x => x.Product.UnitPrice, new { @class = "form-control genislik" })
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Stok</label>
+                        <div class="col-sm-10">
+                            @Html.ValidationMessageFor(x => x.Product.UnitInStock)
+                            @Html.TextBoxFor(x => x.Product.UnitInStock, new { @class = "form-control genislik" })
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Kategori</label>
+                        <div class="col-sm-10">
+                            @Html.ValidationMessageFor(x => x.Product.CategoryID)
+                            @Html.DropDownListFor(x => x.Product.CategoryID, new SelectList(Model.Categories, "ID", "Name"), "Lütfen Seçiniz", new { @class = "form-control genislik" })
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Resim</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="image" class="form-control genislik" />
+                        </div>
+                    </div>
+
+
+                    @foreach (Project.ENTITIES.Models.Attribute item in Model.Attributes)
+                    {
+                        <br /><br />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">@item.Name</label>
+                            <div class="col-sm-10">
+                                @{
+                                    if (Model.Attributes[0].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute0.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute0.Value)
+                                        @Html.TextBoxFor(x => x.Attribute0.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[1].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute1.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute1.Value)
+                                        @Html.TextBoxFor(x => x.Attribute1.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[2].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute2.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute2.Value)
+                                        @Html.TextBoxFor(x => x.Attribute2.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[3].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute3.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute3.Value)
+                                        @Html.TextBoxFor(x => x.Attribute3.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[4].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute4.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute4.Value)
+                                        @Html.TextBoxFor(x => x.Attribute4.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[5].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute5.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute5.Value)
+                                        @Html.TextBoxFor(x => x.Attribute5.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[6].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute6.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute6.Value)
+                                        @Html.TextBoxFor(x => x.Attribute6.Value, new { @class = "form-control genislik" });
+                                    }
+                                    else if (Model.Attributes[7].Name == item.Name)
+                                    {
+                                        @Html.HiddenFor(x => x.Attribute7.Name)
+                                        @Html.ValidationMessageFor(x => x.Attribute7.Value)
+                                        @Html.TextBoxFor(x => x.Attribute7.Value, new { @class = "form-control genislik" });
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <br /><br /><br />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary">
+                                Ürün Ekle
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+}

@@ -1,0 +1,87 @@
+﻿@model ProductVM
+@{
+    ViewBag.Title = "ProductList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert-danger text-center" style="font-size:large">@TempData["hataCRUD"] @TempData["hata"]</div>
+
+<div class="text-center" style="font-family:'Agency FB'; font-size:x-large">Ürünler</div>
+
+<div class="panel-body">
+    <h4>
+    Ürün eklemek için kategorisine tıklayınız
+        <br /><br />
+        <div class="btn-group">
+            @foreach (Category item in Model.Categories)
+            {
+                @Html.ActionLink($"{item.Name}", "AddProduct", new { category = item.Name }, new { @class = "btn btn-info" })
+            }
+        </div>
+
+    </h4>
+</div>
+
+<div class="panel-body col-lg-4">
+    <input type="text" placeholder="Ürünlerde Ara" class="form-control" id="search">
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="adv-table">
+            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                <thead>
+                    <tr>
+                        <th>Ürün ID</th>
+                        <th>Ürün Adı</th>
+                        <th class="text-center">Ürün Fiyatı</th>
+                        <th class="text-center">Stok</th>
+                        <th class="text-center">Resmi</th>
+                        <th class="text-center hidden-phone; text-center">Kategorisi</th>
+                        <th class="text-center hidden-phone; text-center">Durum</th>
+                        <th class="text-center hidden-phone; text-center" colspan="3">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody id="body">
+                    @foreach (Product item in Model.Products)
+                    {
+                        <tr class="gradeX" id="tr">
+                            <td>@item.ID</td>
+                            <td>@item.Name</td>
+                            <td class="text-center">@item.UnitPrice.ToString("C2")</td>
+                            <td class="text-center">@item.UnitInStock</td>
+                            @if (item.ImagePath == null)
+                            {
+                                <td class="text-center hidden-phone">Resmi Yok</td>
+                            }
+                            else
+                            {
+                                <td class="text-center hidden-phone"><img src="@item.ImagePath" title="@item.Name" alt="Resim Yok" width="30" height="30"/></td>
+                            }
+                            <td class="text-center hidden-phone">@item.Category.Name</td>
+                            <td class="text-center hidden-phone">@item.Status</td>
+                            <td class="text-center hidden-phone">@Html.ActionLink("Göz at", "ProductDetail", new { id = item.ID, area = "", @controller = "Shopping" }, new { @class = "btn btn-info" })</td>
+                            <td class="text-center hidden-phone">@Html.ActionLink("Güncelle", "UpdateProduct", new { id = item.ID }, new { @class = "btn btn-warning" })</td>
+                            <td class="text-center hidden-phone">@Html.ActionLink("Sil", "DeleteProduct", new { id = item.ID }, new { @class = "btn btn-danger" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#body tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+</script>

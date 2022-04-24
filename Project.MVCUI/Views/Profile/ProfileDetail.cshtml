@@ -1,0 +1,80 @@
+﻿@model ProfileVM
+@{
+    ViewBag.Title = "Profile";
+}
+
+<section id="container" class="">
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img src="@Model.Profile.ImagePath" alt="Resim Yok">
+                    </a>
+                    <h1>@Model.Profile.FullName</h1>
+                    <p>@Model.User.Email</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="@Url.Action("ProfileDetail")"> <i class="icon-user"></i> Profil</a></li>
+                    <li><a href="@Url.Action("EditProfile", new { id=Model.User.ID})"> <i class="icon-edit"></i> Profili düzenle</a></li>
+                    <li><a href="@Url.Action("Addresses", "Address")"> <i class="icon-road"></i> Adresler</a></li>
+                </ul>
+
+            </section>
+        </aside>
+        <aside class="profile-info col-lg-9">
+            <section class="panel">
+                <div class="bio-graph-heading">
+                    PROFİL DETAYI
+                </div>
+                <div class="panel-body bio-graph-info">
+                    <div class="row">
+                        <div class="bio-row">
+                            <p><span>İsim </span>: @Model.Profile.FirstName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Soyisim </span>: @Model.Profile.LastName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Kullanıcı Adı </span>: @Model.User.UserName</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Yetki </span>: @Model.User.Role.ToString()</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Email </span>: @Model.User.Email</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <div class="bio-graph-heading">
+                Adresler
+            </div>
+
+            <section class="panel-body">
+                <div class="row">
+                    @foreach (Address item in Model.Profile.Addresses)
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-lg-2" style="font-size:large">@item.Name: </label>
+                            <div class="col-lg-10" style="font-size:medium">
+                                @item.FullAddress
+                            </div>
+                        </div>
+
+                        <br /><br /><br /><br />
+                    }
+                </div>
+            </section>
+        </aside>
+    </div>
+</section>
+
+<script>
+
+    $(".knob").knob();
+
+</script>
