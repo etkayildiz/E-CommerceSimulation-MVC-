@@ -27,7 +27,7 @@ namespace Project.DAL.StrategyPattern
                 ConfirmPassword = DantexCryptex.Crypt("123"),
                 Role = ENTITIES.Enums.UserRole.Admin,
                 Active = true, //Mail aktivasyonu kabul edilmiş şekilde oluşturduk
-                Email = "tugberkmehdioglu@yandex.com"
+                Email = "yldzetka@gmail.com"
             };
 
             context.AppUsers.Add(admin);
